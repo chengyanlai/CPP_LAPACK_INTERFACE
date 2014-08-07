@@ -1,0 +1,27 @@
+######### Compilers #############
+CXX := clang -std=c++11 -stdlib=libc++ -Weverything -O3
+# CXX := icpc -O3 -fast -Wall -std=c++0x #-g #debug flag
+
+######## BLAS and LAPACK ########
+## For a recent Mac OSX system (include flags intentionally left blank)
+LIBFLAG := OSX
+LIB := -lstdc++ -lblas -llapack -framework Accelerate -lm
+## Example using the Intel MKL library
+# LIBFLAG := MKL
+# MKLROOT=/home/mmetcalf/intel/mkl/
+# LIB := -Wl,--start-group $(MKLROOT)/lib/ia32/libmkl_intel.a $(MKLROOT)/lib/ia32/libmkl_core.a \
+$(MKLROOT)/lib/ia32/libmkl_sequential.a -Wl,--end-group -lpthread -lm
+
+a.out: main.o
+	$(CXX) -o $@ $< myLapack.o $(LIB)
+
+main.o: example.cpp myLapack.o
+	$(CXX) -o $@ -c $<
+
+myLapack.o: myLapack.cpp
+	$(CXX) -D${LIBFLAG} -o $@ -c $<
+
+cln:
+	rm -f *.o a.*
+
+.PHONY : cln
