@@ -10,7 +10,10 @@ CF := gfortran -O3
 ## Example using the Intel MKL library
 LIBFLAG := MKL
 MKLROOT=/home/mmetcalf/intel/mkl/
-LIB := -Wl,--start-group $(MKLROOT)/lib/ia32/libmkl_intel.a $(MKLROOT)/lib/ia32/libmkl_core.a \
+#LIB := -Wl,--start-group $(MKLROOT)/lib/ia32/libmkl_intel.a $(MKLROOT)/lib/ia32/libmkl_core.a \
+#$(MKLROOT)/lib/ia32/libmkl_sequential.a -Wl,--end-group -lpthread -lm
+# This is for gfortran, we need -ldl to find dlopen.
+LIB := -ldl -Wl,--start-group $(MKLROOT)/lib/ia32/libmkl_intel.a $(MKLROOT)/lib/ia32/libmkl_core.a \
 $(MKLROOT)/lib/ia32/libmkl_sequential.a -Wl,--end-group -lpthread -lm
 
 a.out: main.o
