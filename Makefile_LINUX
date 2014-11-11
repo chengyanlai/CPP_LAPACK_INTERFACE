@@ -9,11 +9,13 @@ CF := gfortran -O3
 # LIB := -lstdc++ -lblas -llapack -framework Accelerate -lm
 ## Example using the Intel MKL library
 LIBFLAG := MKL
-MKLROOT=/home/mmetcalf/intel/mkl/
-LIB := -Wl,--start-group $(MKLROOT)/lib/ia32/libmkl_intel.a $(MKLROOT)/lib/ia32/libmkl_core.a \
-$(MKLROOT)/lib/ia32/libmkl_sequential.a -Wl,--end-group -lpthread -lm
+MKLROOT=/home/share/apps/intel/composer_xe_2013_sp1.3.174/mkl
+LIB := -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_core.a \
+$(MKLROOT)/lib/intel64/libmkl_sequential.a -Wl,--end-group -lpthread -lm
 
-a.out: main.o
+all:f95.e
+
+cpp.e: main.o
 	$(CXX) -o $@ $< myLapack.o $(LIB)
 
 main.o: dsyev_example.cpp myLapack.o
@@ -26,13 +28,13 @@ f95.e: main95.o
 	$(CF) -o $@ $< myLapack95.o nrtype.o $(LIB)
 
 main95.o: dsyev_example.f90 myLapack95.o nrtype.o
-	$(CF) -o $@ -c $<
+	$(CF) -x f95-cpp-input -o $@ -c $<
 
 myLapack95.o: myLapack95.f90 nrtype.o
-	$(CF) -D${LIBFLAG} -o $@ -c $<
+	$(CF) -x f95-cpp-input -D${LIBFLAG} -o $@ -c $<
 
 nrtype.o: nrtype.f90
-	$(CF) -o $@ -c $<
+	$(CF) -x f95-cpp-input -o $@ -c $<
 
 clean:
 	rm -f *.o *.mod *.e
