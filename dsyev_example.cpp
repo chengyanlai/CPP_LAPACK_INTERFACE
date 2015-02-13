@@ -6,13 +6,13 @@ int main(){
     double * Matrix;
     double * EigVec;
     double * Eig;
-    
+
     EigVec = new double[dim*dim];
     Eig = new double[dim];
-    
+
     Matrix = new double[dim*dim];
     std::fill(Matrix, Matrix+dim*dim, 0.0e0);
-    
+
     Matrix[0]=0.0;
     Matrix[1]=1.0;
     Matrix[2]=1.0;
@@ -22,12 +22,12 @@ int main(){
     Matrix[6]=1.0;
     Matrix[7]=1.0;
     Matrix[8]=0.0;
-    
+
     Diag(Matrix, dim, Eig, EigVec);
-    
+
     printf("Eigenvalues\n");
     for (int i=0; i < dim; i++) printf(" %17.10e ", Eig[i]);
-    
+
     printf("\n\n");
     printf("Eigenvectors\n");
     for (int i=0; i < dim; i++)
