@@ -1,5 +1,6 @@
 #ifdef OSX
-    #include <Accelerate/Accelerate.h>//On OSX
+    // #include <Accelerate/Accelerate.h>//On OSX
+    #include "lapack_wrapper.h"
 #elif defined MKL
     #include "mkl.h"
 #endif

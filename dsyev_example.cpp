@@ -14,13 +14,13 @@ int main(){
     std::fill(Matrix, Matrix+dim*dim, 0.0e0);
 
     Matrix[0]=0.0;
-    Matrix[1]=1.0;
-    Matrix[2]=1.0;
-    Matrix[3]=1.0;
+    Matrix[1]=-1.0;
+    Matrix[2]=0.0;
+    Matrix[3]=-1.0;
     Matrix[4]=0.0;
-    Matrix[5]=1.0;
-    Matrix[6]=1.0;
-    Matrix[7]=1.0;
+    Matrix[5]=-1.0;
+    Matrix[6]=0.0;
+    Matrix[7]=-1.0;
     Matrix[8]=0.0;
 
     Diag(Matrix, dim, Eig, EigVec);
